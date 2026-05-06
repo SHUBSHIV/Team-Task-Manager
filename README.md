@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Team Task Manager
 
 A full-stack MERN task management web app with role-based access for Admin and Member users.
@@ -40,3 +41,6 @@ To deploy on Railway or another platform:
 
 ## Notes
 This starter includes a full MERN structure for a team task manager app. Extend it with richer validation, pagination, search, and a polished UI for a complete portfolio submission.
+=======
+
+>>>>>>> ff3d7c55fcf6b2f2aa66e9da778262b732819675
