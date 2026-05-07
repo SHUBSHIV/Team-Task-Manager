@@ -10,14 +10,8 @@ const taskRoutes = require('./routes/tasks');
 dotenv.config();
 const app = express();
 
-const allowedOrigins = [process.env.CLIENT_URL, 'http://localhost:3000'].filter(Boolean);
 app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    }
-    callback(new Error(`CORS origin denied: ${origin}`));
-  },
+  origin: true,
   credentials: true,
   methods: ['GET','POST','PUT','PATCH','DELETE','OPTIONS'],
   allowedHeaders: ['Content-Type','Authorization']
