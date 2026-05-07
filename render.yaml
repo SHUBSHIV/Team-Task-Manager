@@ -1,5 +1,5 @@
 services:
-  - type: web_service
+  - type: web
     name: team-task-manager
     env: node
     plan: free
