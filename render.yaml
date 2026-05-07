@@ -8,6 +8,6 @@ services:
     startCommand: cd backend && npm start
     envVars:
       - key: MONGO_URI
-        value: "<YOUR_MONGO_URI>"
+        value: "mongodb+srv://shubhampra20122003_db_user:n8H0I3bCW0hR9aeJ@cluster0.nrbwnkx.mongodb.net/?appName=Cluster0"
       - key: JWT_SECRET
-        value: "<YOUR_JWT_SECRET>"
+        value: "shuv123"
