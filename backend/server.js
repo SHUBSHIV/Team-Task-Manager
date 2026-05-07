@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const path = require('path');
 const authRoutes = require('./routes/auth');
 const projectRoutes = require('./routes/projects');
 const taskRoutes = require('./routes/tasks');
@@ -9,8 +10,14 @@ const taskRoutes = require('./routes/tasks');
 dotenv.config();
 const app = express();
 
+const allowedOrigins = [process.env.CLIENT_URL, 'http://localhost:3000'].filter(Boolean);
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:3000',
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    callback(new Error(`CORS origin denied: ${origin}`));
+  },
   credentials: true,
   methods: ['GET','POST','PUT','PATCH','DELETE','OPTIONS'],
   allowedHeaders: ['Content-Type','Authorization']
@@ -27,6 +34,17 @@ app.use('/api/projects', projectRoutes);
 app.use('/api/tasks', taskRoutes);
 
 app.get('/api/health', (req, res) => res.json({ status: 'ok', timestamp: new Date() }));
+
+const buildPath = path.join(__dirname, '../frontend/build');
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(buildPath));
+  app.get('*', (req, res) => {
+    if (req.path.startsWith('/api')) {
+      return res.status(404).json({ error: 'API route not found' });
+    }
+    res.sendFile(path.join(buildPath, 'index.html'));
+  });
+}
 
 app.use((err, req, res, next) => {
   console.error(err.message);

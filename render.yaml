@@ -1,26 +1,13 @@
 services:
   - type: web_service
-    name: team-task-manager-backend
+    name: team-task-manager
     env: node
     plan: free
     branch: main
-    buildCommand: cd backend && npm install
+    buildCommand: cd backend && npm install && npm run build
     startCommand: cd backend && npm start
     envVars:
       - key: MONGO_URI
         value: "<YOUR_MONGO_URI>"
       - key: JWT_SECRET
         value: "<YOUR_JWT_SECRET>"
-      - key: CLIENT_URL
-        value: "https://team-task-manager-frontend.onrender.com"
-
-  - type: static_site
-    name: team-task-manager-frontend
-    env: static
-    plan: free
-    branch: main
-    buildCommand: cd frontend && npm install && npm run build
-    publishPath: frontend/build
-    envVars:
-      - key: REACT_APP_API_URL
-        value: "https://team-task-manager-backend.onrender.com/api"
